@@ -1,0 +1,89 @@
+Консоль Django:
+from django.contrib.auth.models import User
+from news.models import Author, Category, Post, PostCategory, Comment
+
+1. Создать двух пользователей (с помощью метода User.objects.create_user('username')).
+us1 = User.objects.create_user('Иванов Иван Иванови')
+us2 = User.objects.create_user('Петров Петр Петрович')
+
+2. Создать два объекта модели Author, связанные с пользователями
+ath1 = Author.objects.create(user=us1, rating = 20)
+ath2 = Author.objects.create(user=us2, rating = 30)
+
+3. Добавить 4 категории в модель Category
+cat1 = Category.objects.create(name='Культура')
+cat2 = Category.objects.create(name='Спорт')
+cat3 = Category.objects.create(name='Наука')
+cat4 = Category.objects.create(name='Прогноз погоды')
+
+4. Добавить 2 статьи и 1 новость
+stat1 = Post.objects.create(author=ath1, post_type='AC', title = 'Прогноз погоды на 12.01.2025 МОСКВА', text = 'Погода на 11 февраля в Москве ; ночь. -16°. облачность ; утро. -16°. слабый снег ; день. -12°. снег ; вечер. -14°. облачность.', rating = 155)
+
+stat2 = Post.objects.create(author=ath2, post_type='AC', title = 'Делегация российских фигуристов примет участие в Российско-китайских зимних молодежных играх на Сахалине.', text = 'В условиях изоляции такой турнир с участниками из-за рубежа, с гимном и флагом — это большой плюс для российских спортсменов. Как минимум в моральном плане.', rating = 104)
+
+new1 = Post.objects.create(author=ath1, post_type='NW', title = 'Калининградские ученые предложили превратить мазут в экоуголь', text = 'Этот композиционный материал, содержащий в качестве компонентов отходы синтетического пластика, тяжелые фракции нефти и природные наполнители, к примеру, такие как торф, водоросли, кора деревьев и другие материалы, может применяться в зависимости от соотношения компонентов и как эффективное твёрдое топливо, и как гидрофобизирующие мастики', rating = 217)
+
+
+5. Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий)
+PostCategory.objects.create(post = stat1, category = cat3)
+PostCategory.objects.create(post = stat1, category = cat4)
+#stat1.categories.add(cat3, cat4)
+
+PostCategory.objects.create(post = stat2, category = cat1)
+PostCategory.objects.create(post = stat2, category = cat2)
+#stat2.categories.add(cat1, cat2)
+
+PostCategory.objects.create(post = new1, category = cat2)
+PostCategory.objects.create(post = new1, category = cat3)
+PostCategory.objects.create(post = new1, category = cat4)
+#new1.categories.add(cat3, cat2, cat4)
+
+6. Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий)
+us1 = User.objects.get(pk=1)
+us2 = User.objects.get(pk=2)
+stat1 = Post.objects.get(pk=1)
+stat2 = Post.objects.get(pk=2)
+new1 = Post.objects.get(pk=3)
+
+commentar1 = Comment.objects.create(post=stat1, user = us1, text = 'Холодрыга..', rating= 20)
+commentar2 = Comment.objects.create(post=stat1, user = us2, text = 'Наконец наступили холода, а то зима совсем не ощущается', rating= 45)
+
+commentar3 = Comment.objects.create(post=stat2, user = us1, text = 'Удачи нашим!!', rating= 56)
+commentar4 = Comment.objects.create(post=stat2, user = us2, text = 'Желаем победы!!', rating= 98)
+
+commentar5 = Comment.objects.create(post=new1, user = us1, text = 'Бедные животные(', rating= 197)
+commentar6 = Comment.objects.create(post=new1, user = us2, text = 'Нужно спасать экологию', rating= 141)
+
+7. Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов
+stat1.like()
+stat2.dislike()
+new1.like()
+commentar1.like()
+commentar2.dislike()
+commentar3.like()
+commentar4.dislike()
+commentar5.like()
+commentar6.dislike()
+
+8. Обновить рейтинги пользователей
+ath1 = Author.objects.get(pk=1)
+ath2 = Author.objects.get(pk=2)
+ath1.update_rating()
+ath2.update_rating()
+
+9. Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта)
+best_author = Author.objects.order_by('-rating').first()
+print("Лучший автор - ", best_author.user.username, "Рейтинг - ", best_author.rating)
+
+10. Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье
+best_post = Post.objects.order_by('-rating').first()
+print("Лучшая статья/новость:")
+print("Дата добавления:", best_post.created_at)
+print("Username автора:", best_post.author.user.username)
+print("Рейтинг:", best_post.rating)
+print("Заголовок:", best_post.title)
+print("Превью:", best_post.preview())
+
+11. Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье
+comments = Comment.objects.filter(post=best_post).values('created_at', 'user__username', 'rating', 'text')
+print(comments)
