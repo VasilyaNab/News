@@ -5,6 +5,7 @@ from django.views.generic import (
 from .models import Post
 from .forms import PostForm
 from .filters import PostFilter
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 class NewsList(ListView):
     model = Post
@@ -29,21 +30,29 @@ class PostDetail(DetailView):
     template_name = 'new.html'
     context_object_name = 'new'
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post', )
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
+    login_url = '/admin/'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='authors').exists()
 
     def form_valid(self, form):
         form.instance.post_type = self.kwargs.get('post_type', 'news')
         return super().form_valid(form)
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post', )
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
+    def test_func(self):
+        return self.request.user.groups.filter(name='authors').exists()
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('news_list')

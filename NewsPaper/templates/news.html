@@ -16,7 +16,7 @@ News
    {% if news %}
            {% for new in news %}
            <tr>
-            <h2><a href="{% url 'about_new' new.id %}">{{ new.title|censor }}</a></h2>
+            <h2><a href="{% url 'news:about_new' new.id %}">{{ new.title|censor }}</a></h2>
             <p>Дата публикации: {{ new.created_at|date:"d.m.Y" }}</p>
             <p>{{ new.text|slice:":20"|censor }}...</p>
            </tr>

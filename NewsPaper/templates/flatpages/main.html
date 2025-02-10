@@ -46,7 +46,7 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header style='margin-bottom: 80px'>
     <div>
-      <a class="float-md-start mb-0 nav-link" style="color:rgba(255, 255, 255, .5); font-weight: 900; font-size: 25px" href="/">PROJECT NAB</a>
+        <a class="float-md-start mb-0 nav-link" style="color:rgba(255, 255, 255, .5); font-weight: 900; font-size: 25px" href="/">PROJECT NAB</a>
       <nav class="nav nav-masthead justify-content-center float-md-end">
         {% comment %} <a class="nav-link active" aria-current="page" href="/about/">About Us</a> {% endcomment %}
         {% if not user.is_authenticated %}
@@ -62,8 +62,6 @@
   </header>
 
   <main class="px-3">
-    {% block title %}
-    {% endblock title %}
     {% block content %}
     {% endblock content %}
   </main>
