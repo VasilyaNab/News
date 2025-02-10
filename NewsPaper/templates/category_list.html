@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Категории
+{% endblock title %}
+
+{% block content %}
+<h1>Категории</h1>
+<br>
+<ul style="margin-left: 70px">
+    {% for category in categories %}
+        <li style="margin-left: 50px">
+            {{ category.name }}
+            <a style="margin-left: 80px" href="{% url 'news:subscribe' category.id %}">Подписаться</a>
+        </li>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}

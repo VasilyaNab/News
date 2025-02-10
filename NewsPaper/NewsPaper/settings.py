@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'news',
     'accounts',
     'sign',
-    
+    'django_apscheduler',
     'django.contrib.flatpages',
     'django_filters',
 ]
@@ -157,5 +157,23 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_FORMS = {'signup': 'sign.models.CommonSignupForm'}
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_FORMS = {'signup': 'sign.forms.CommonSignupForm'}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru' 
+EMAIL_PORT = 465  
+EMAIL_HOST_USER = 'MYEMAIL'
+EMAIL_HOST_PASSWORD = 'MYEMAILPASSWORD'
+EMAIL_USE_SSL = True 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/accounts/login/'
+default_app_config = 'news.apps.NewsConfig'
+
+# формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам) 
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+ 
+# если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

@@ -23,6 +23,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name='Название категории')
+    subscribers = models.ManyToManyField(User, related_name='subscribed_categories', blank=True)
     def __str__(self):
         return self.name
 class Post(models.Model):
@@ -46,7 +47,8 @@ class Post(models.Model):
     def preview(self):
         return self.text[0:124] + '...'
     def get_absolute_url(self):
-        return reverse('about_new', kwargs={'pk': self.pk})
+        return reverse('news:about_new', kwargs={'pk': self.pk})
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Пост')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
@@ -65,3 +67,4 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+

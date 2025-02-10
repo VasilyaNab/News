@@ -1,0 +1,28 @@
+{% extends 'account/base.html' %}
+{% block content %}
+    <div class="container">
+        <h2>Регистрация</h2><br><br>
+        <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            <div>
+                <label for="id_username">Никнейм:</label>
+                <input type="text" name="username" id="id_username" required>
+            </div>
+            <br><br>
+            <div>
+                <label for="id_email">Электронная почта:</label>
+                <input type="email" name="email" id="id_email" required>
+            </div><br>
+            <div>
+                <label for="id_password1">Пароль:</label>
+                <input type="password" name="password1" id="id_password1" required>
+            </div><br>
+            <div>
+                <label for="id_password2">Подтверждение пароля:</label>
+                <input type="password" name="password2" id="id_password2" required>
+            </div><br><br>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        <p>Уже есть аккаунт? <a href="{% url 'account_login' %}">Войти</a></p><br>
+    </div>
+{% endblock content %} 

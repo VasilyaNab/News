@@ -2,17 +2,27 @@
 
 {% load custom_filter %}
 
-{% block title %}
-News
-{% endblock title %}
+
 
 {% block content %}
-   <h1>Все новости</h1>
+    <h1>Все новости</h1> 
     <form action="" method="get"> 
         {{ filterset.form.as_p }}
         <input type="submit" value="Найти" />
     </form>
     
+    <br>
+
+    <form method="get">
+        <select name="category_id">
+            <option value="">Все категории</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Фильтровать</button>
+    </form>
+    <br><hr><br>
    {% if news %}
            {% for new in news %}
            <tr>

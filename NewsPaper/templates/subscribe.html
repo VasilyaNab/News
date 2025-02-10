@@ -1,0 +1,25 @@
+
+
+{% extends 'flatpages/default.html' %}
+
+
+
+{% block content %}
+<h1>Категория рассылка</h1>
+{% if is_subscribed %}
+    <p>Вы подписаны на новости в этой категории. Хотите отменить подписку?</p>
+{% else %}
+    <p>Вы еще не подписаны на новости в этой категории. Хотите получать уведомление при новых новостях данной категории?</p>
+{% endif %}
+<form method="post" action="{% url 'news:subscribe' category.id %}">
+    {% csrf_token %}
+    <button type="submit">
+        {% if is_subscribed %}
+            Отписаться
+        {% else %}
+            Подпишись
+        {% endif %}
+    </button>
+</form>
+
+{% endblock %}

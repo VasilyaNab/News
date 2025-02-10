@@ -2,13 +2,14 @@
 {% extends 'flatpages/default.html' %}
 {% load custom_filter %}
 
-{% block title %}
-New
-{% endblock title %}
 
 {% block content %}
 <a class="nav-link" href="/">Назад</a>
-<h1>{{ new.title|censor }}</h1>
-<p>Дата публикации: {{ new.created_at|date:"d.m.Y" }}</p>
-<p>{{ new.text|censor }}</p>
+<button> <a href="{% url 'news:edit_news' post.pk %}">Редактировать пост</a> </button> <br>
+<button> <a href="{% url 'news:delete_news' post.pk %}">Удалить пост</a> </button> <br>
+<h1>{{ post.title|censor }}</h1>
+<p>Дата публикации: {{ post.created_at|date:"d.m.Y" }}</p>
+<p>{{ post.text|censor }}</p>
+
+
 {% endblock %}

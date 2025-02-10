@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+
+from .resources import POSITIONS
 from .models import Post, Category, Author
 
 class PostForm(forms.ModelForm):
@@ -18,6 +19,10 @@ class PostForm(forms.ModelForm):
         label="Категории"
     )
 
+    post_type = forms.ChoiceField( 
+        choices=POSITIONS,
+        label="Тип"
+    )
     class Meta:
         model = Post
         fields = ['author', 'post_type', 'categories', 'title', 'text']
@@ -33,3 +38,7 @@ class PostForm(forms.ModelForm):
             )
 
         return cleaned_data
+    
+    
+
+    
