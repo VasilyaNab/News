@@ -1,0 +1,14 @@
+
+{% extends 'flatpages/default.html' %}
+{% load custom_filter %}
+
+{% block title %}
+New
+{% endblock title %}
+
+{% block content %}
+<a class="nav-link" href="/news/">Назад</a>
+<h1>{{ new.title|censor }}</h1>
+<p>Дата публикации: {{ new.created_at|date:"d.m.Y" }}</p>
+<p>{{ new.text|censor }}</p>
+{% endblock %}

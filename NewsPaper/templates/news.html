@@ -1,0 +1,22 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filter %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+   <h1>Все новости</h1>
+   {% if news %}
+           {% for new in news %}
+           <tr>
+            <h2><a href="{% url 'about_new' new.id %}">{{ new.title|censor }}</a></h2>
+            <p>Дата публикации: {{ new.created_at|date:"d.m.Y" }}</p>
+            <p>{{ new.text|slice:":20"|censor }}...</p>
+           </tr>
+           {% endfor %}
+   {% else %}
+       <h2>Новостей нет!</h2>
+   {% endif %}
+{% endblock content %}
