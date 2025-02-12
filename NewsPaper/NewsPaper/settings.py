@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from celery.schedules import crontab
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -177,3 +178,20 @@ APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
  
 # если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
+#для правильного запуска celery = celery -A NewsPaper worker --loglevel=info --pool=solo
+
+CELERY_BEAT_SCHEDULE = {
+    'send-news-every-monday': {
+        'task': 'news.tasks.send_all_newss',
+        'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
+    },
+}

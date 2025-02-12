@@ -97,7 +97,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
             author, created = Author.objects.get_or_create(user=self.request.user)
             publish_limit = Post.objects.filter(author=author, created_at__date=timezone.now().date()).count()
-            if publish_limit > 4:
+            if publish_limit >= 3:
                 return render(self.request, 'limit.html')
             form.instance.author = author
             form.instance.post_type = self.kwargs.get('post_type', 'news')

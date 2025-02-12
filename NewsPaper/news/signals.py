@@ -18,7 +18,7 @@ def new_post(sender, instance, action, **kwargs):
             if subscriber.email:
                 category_names = ', '.join([category.name for category in categories])
                 subject = f'Новая новость в категории {category_names}: {instance.title}'
-                html_content = render_to_string('message.html', {'post': instance})
+                html_content = render_to_string('emailmessage/message.html', {'post': instance})
 
                 msg = EmailMultiAlternatives(
                     subject=subject,
@@ -40,7 +40,7 @@ def upgrade_new(sender, instance, created, **kwargs):
         for subscriber in subscribers:
             if subscriber.email:
                 subject = f'Пост был обновлен: {instance.title}'
-                html_content = render_to_string('messageUPGRADE.html', {'post': instance})
+                html_content = render_to_string('emailmessage/messageUPGRADE.html', {'post': instance})
 
                 msg = EmailMultiAlternatives(
                     subject=subject,

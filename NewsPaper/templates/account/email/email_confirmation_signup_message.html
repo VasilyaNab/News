@@ -1,7 +1,12 @@
-{% extends 'account/base.html' %}
-{% load socialaccount %}
-{% load account %}
-{% block content %}
-<h1>Спасибо за регистрацию - {{ user.username }}!</h1>
-<h3>Пожалуйста, перейдите <a href="{{ activate_url }}">по ссылке</a>, чтобы активировать свою учетную запись</h3>
-{% endblock content %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>Спасибо за регистрацию - {{ user.username }}!</h1>
+</head>
+<body>
+    <h3>Пожалуйста, перейдите <a href="{{ activate_url }}">по ссылке</a>, чтобы активировать свою учетную запись</h3>
+</body>
+</html>
+

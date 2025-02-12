@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>Здравствуйте!</h1>
+    <h1>Последние новости за неделю:</h1>
+</head>
+<body>
+    <div class="container">
+        {% for post in last_3_news %}
+            <div class="post-item">
+                <h1>{{ post.title }}</h1>
+                <p><strong>Дата публикации:</strong> {{ post.created_at|date:"d M Y H:i" }}</p>
+                <p>{{ post.text|truncatewords:30 }}</p>
+                <p><a href="{% url 'news:about_new' post.pk %}">Читать далее</a></p>
+            </div>
+            <hr>
+        {% empty %}
+            <p>К сожалению, нет новых новостей.</p>
+        {% endfor %}
+
+        <div class="footer">
+            <h1>Спасибо, что вы с нами!</h1>
+        </div>
+    </div>
+</body>
+</html>
