@@ -9,7 +9,8 @@
     </form>
     
     <br>
-
+    {% load cache %}
+    {% cache 600 categories_cache %}
     <form method="get">
         <select name="category_id">
             <option value="">Все категории</option>
@@ -19,8 +20,9 @@
         </select>
         <button type="submit">Фильтровать</button>
     </form>
+    {% endcache %}
     <br><hr><br>
-   {% if news %}
+    {% if news %}
            {% for new in news %}
            <tr>
             <h2><a href="{% url 'news:about_new' new.id %}">{{ new.title|censor }}</a></h2>

@@ -1,3 +1,6 @@
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -55,7 +58,7 @@ class SubscribeView(View):
             msg.send()
 
         return redirect('news:subscribe', category_id=category.id)
-
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class NewsList(ListView):
     model = Post
     ordering = '-created_at' 
@@ -77,14 +80,20 @@ class NewsList(ListView):
         context['categories'] = Category.objects.all()
         return context
 
-
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class PostDetail(DetailView):
     model = Post
     template_name = 'new.html'
     context_object_name = 'post'
-    def need(self):
-        print(self.kwargs['pk'])
-        return Post.objects.filter(pk=self.kwargs['pk'])
+    def get_object(self, queryset=None):
+        cache_key = f'post_{self.kwargs["pk"]}'
+        post = cache.get(cache_key)
+
+        if not post:
+            post = super().get_object(queryset)
+            cache.set(cache_key, post)
+
+        return post
 class PostCreate(PermissionRequiredMixin, CreateView):
     permission_required = ('news.add_post',)
     form_class = PostForm

@@ -1,9 +1,11 @@
-from django.db.models.signals import post_save, m2m_changed
+from django.db.models.signals import post_save, m2m_changed, post_delete
 from django.dispatch import receiver
+from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from .models import Post
+from .tasks import send_notif, send_UPGRADE_notif
 
 
 @receiver(m2m_changed, sender=Post.categories.through)
@@ -17,17 +19,7 @@ def new_post(sender, instance, action, **kwargs):
         for subscriber in subscribers:
             if subscriber.email:
                 category_names = ', '.join([category.name for category in categories])
-                subject = f'Новая новость в категории {category_names}: {instance.title}'
-                html_content = render_to_string('emailmessage/message.html', {'post': instance})
-
-                msg = EmailMultiAlternatives(
-                    subject=subject,
-                    body='',
-                    from_email=settings.EMAIL_HOST_USER,
-                    to=[subscriber.email],
-                )
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
+                send_notif.delay(subscriber.email, instance.title, instance, category_names)
 
 @receiver(post_save, sender=Post)
 def upgrade_new(sender, instance, created, **kwargs):
@@ -39,15 +31,14 @@ def upgrade_new(sender, instance, created, **kwargs):
             
         for subscriber in subscribers:
             if subscriber.email:
-                subject = f'Пост был обновлен: {instance.title}'
-                html_content = render_to_string('emailmessage/messageUPGRADE.html', {'post': instance})
+                send_UPGRADE_notif.delay(subscriber.email, instance.title, instance)
 
-                msg = EmailMultiAlternatives(
-                    subject=subject,
-                    body='',
-                    from_email=settings.EMAIL_HOST_USER,
-                    to=[subscriber.email],
-                )
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
+@receiver(post_save, sender=Post)
+def clear_post_cache(sender, instance, **kwargs):
+    cache_key = f'post_{instance.pk}'
+    cache.delete(cache_key)
 
+@receiver(post_delete, sender=Post)
+def clear_post_cache_on_delete(sender, instance, **kwargs):
+    cache_key = f'post_{instance.pk}'
+    cache.delete(cache_key)

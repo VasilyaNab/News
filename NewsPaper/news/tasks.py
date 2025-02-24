@@ -26,3 +26,31 @@ def send_all_newss():
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
+@shared_task
+def send_notif(subscriber_email, post_title, post_instance, category_names):
+    subject = f'Новая новость в категории {category_names}: {post_title}'
+    html_content = render_to_string('emailmessage/message.html', {'post': post_instance})
+
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        body='',
+        from_email=settings.EMAIL_HOST_USER,
+        to=[subscriber_email],
+    )
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+@shared_task
+def send_UPGRADE_notif(subscriber_email, post_title, post_instance):
+    subject = f'Пост был обновлен: {post_title}'
+    html_content = render_to_string('emailmessage/messageUPGRADE.html', {'post': post_instance})
+
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        body='',
+        from_email=settings.EMAIL_HOST_USER,
+        to=[subscriber_email],
+    )
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
