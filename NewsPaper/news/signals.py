@@ -1,4 +1,5 @@
 from django.db.models.signals import post_save, m2m_changed, post_delete
+from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
@@ -42,3 +43,11 @@ def clear_post_cache(sender, instance, **kwargs):
 def clear_post_cache_on_delete(sender, instance, **kwargs):
     cache_key = f'post_{instance.pk}'
     cache.delete(cache_key)
+
+@receiver(user_logged_in)
+def clear_cache_on_login(sender, request, user, **kwargs):
+    cache.clear()
+
+@receiver(user_logged_out)
+def clear_cache_on_logout(sender, request, user, **kwargs):
+    cache.clear() 
