@@ -15,7 +15,7 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-
+import logging
 
 
 class CategoryListView(View):
@@ -131,3 +131,14 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('news:news_list')
+
+
+
+logger = logging.getLogger(__name__)
+
+def my_view(request):
+    logger.debug("Отладочное сообщение")
+    logger.info("Информационное сообщение")
+    logger.warning("Сообщение об предупреждении")
+    logger.error("Сообщение об ошибке")
+    logger.critical("Критическое сообщение")
