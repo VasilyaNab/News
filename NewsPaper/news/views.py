@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
 )
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.conf import settings
 from .models import Author, Post, Category
 from .forms import PostForm
@@ -69,6 +69,13 @@ class NewsList(ListView):
     context_object_name = 'news'
     paginate_by = 10
 
+    def get(self, request, *args, **kwargs):
+        language = request.GET.get('language')
+        if language:
+            translation.activate(language)
+            request.session[translation.LANGUAGE_SESSION_KEY] = language
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category_id')
@@ -79,7 +86,11 @@ class NewsList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filterset'] = self.filterset
+        filterset = PostFilter(self.request.GET, queryset=self.get_queryset())
+        filterset.form.fields['title'].label = translation.gettext('Enter the title')
+        filterset.form.fields['author'].label = translation.gettext('Author')
+        filterset.form.fields['created_at'].label = translation.gettext('Publication date')
+        context['filterset'] = filterset
         context['categories'] = Category.objects.all()
         return context
 
@@ -112,7 +123,6 @@ class PostCreate(PermissionRequiredMixin, CreateView):
             if publish_limit >= 3:
                 return render(self.request, 'limit.html')
             form.instance.author = author
-            form.instance.post_type = self.kwargs.get('post_type', 'news')
             post = form.save()
             categories = form.cleaned_data.get('categories')
             post.categories.set(categories)
@@ -126,7 +136,6 @@ class PostUpdate(PermissionRequiredMixin, UpdateView):
     def test_func(self):
         return self.request.user.groups.filter(name='authors').exists()
     def form_valid(self, form):
-        form.instance.post_type = self.kwargs.get('post_type', 'news')
         post = form.save()
         return redirect('news:news_list')
 

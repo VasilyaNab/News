@@ -29,7 +29,8 @@ def send_all_newss():
             msg.send()
 
 @shared_task
-def send_notif(subscriber_email, post_title, post_instance, category_names):
+def send_notif(subscriber_email, post_title, post_id, category_names):
+    post_instance = Post.objects.get(id=post_id)
     subject = _('New post in category %(category_names)s: %(post_title)s') % {'category_names': category_names, 'post_title': post_title}
     html_content = render_to_string('emailmessage/message.html', {'post': post_instance})
 
@@ -43,7 +44,8 @@ def send_notif(subscriber_email, post_title, post_instance, category_names):
     msg.send()
 
 @shared_task
-def send_UPGRADE_notif(subscriber_email, post_title, post_instance):
+def send_UPGRADE_notif(subscriber_email, post_title, post_id):
+    post_instance = Post.objects.get(id=post_id)
     subject = _('Post updated: %(post_title)s') % {'post_title': post_title}
     html_content = render_to_string('emailmessage/messageUPGRADE.html', {'post': post_instance})
 

@@ -20,7 +20,7 @@ def new_post(sender, instance, action, **kwargs):
         for subscriber in subscribers:
             if subscriber.email:
                 category_names = ', '.join([category.name for category in categories])
-                send_notif.delay(subscriber.email, instance.title, instance, category_names)
+                send_notif.delay(subscriber.email, instance.title, instance.id, category_names)
 
 @receiver(post_save, sender=Post)
 def upgrade_new(sender, instance, created, **kwargs):
@@ -32,7 +32,7 @@ def upgrade_new(sender, instance, created, **kwargs):
             
         for subscriber in subscribers:
             if subscriber.email:
-                send_UPGRADE_notif.delay(subscriber.email, instance.title, instance)
+                send_UPGRADE_notif.delay(subscriber.email, instance.title, instance.id)
 
 @receiver(post_save, sender=Post)
 def clear_post_cache(sender, instance, **kwargs):
