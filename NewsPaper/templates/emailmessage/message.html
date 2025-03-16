@@ -1,17 +1,18 @@
-<html lang="ru">
+{% load i18n %}
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новая новость: {{ post.title }}</title>
+    <title>{% trans "New Post: %s" %} {{ post.title }}</title>
 </head>
 <body>
     <div class="container">
-        <h1>Новая новость: {{ post.title }}</h1>
-        <p><strong>Дата публикации:</strong> {{ post.created_at|date:"d M Y H:i" }}</p>
+        <h1>{% trans "New Post: %s" %} {{ post.title }}</h1>
+        <p><strong>{% trans "Publication Date:" %}</strong> {{ post.created_at|date:"d M Y H:i" }}</p>
         <p>{{ post.text }}</p>
-        <p>Вы можете прочитать полную статью на нашем сайте: <a href="{% url 'news:about_new' post.pk %}">Читать статью</a></p> 
+        <p>{% trans "You can read the full article on our site:" %} <a href="{% url 'news:about_new' post.pk %}">{% trans "Read Article" %}</a></p> 
         <div class="footer">
-            <p>Спасибо, что вы с нами!</p>
+            <p>{% trans "Thank you for being with us!" %}</p>
         </div>
     </div>
 </body>

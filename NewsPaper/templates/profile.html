@@ -1,19 +1,17 @@
 {% extends 'flatpages/default.html' %}
-
-
+{% load i18n %}
 {% block content %}
-<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
-<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<h2>{% trans "Authorized User Page" %} {{ request.user.username }}</h2>
+<div>{% trans "This may contain personal information for each user." %}</div>
 <br>
 {% if is_not_authors %}
-<button> <a href="{% url 'sign:upgrade' %}"> Стать автором!</a> </button>
+<button><a href="{% url 'sign:upgrade' %}">{% trans "Become an Author!" %}</a></button>
 {% else %}
-<button> <a href="{% url 'news:create_news' %}"> Создать пост!</a> </button>
-{% comment %} <button> <a href="{% url 'news:create_news' %}"> Создать новость!</a> </button> {% endcomment %}
+<button><a href="{% url 'news:create_news' %}">{% trans "Create Post!" %}</a></button>
 {% endif %}
-<h2>Хотите выйти из системы?</h2>
+<h2>{% trans "Do you want to log out?" %}</h2>
 <form method="post" action="{% url 'sign:logout' %}">
     {% csrf_token %}
-    <button style="margin-left: 265px" class="nav-link " type="submit">Выйти</button>
+    <button style="margin-left: 265px" class="nav-link" type="submit">{% trans "Log Out" %}</button>
 </form>
 {% endblock %}

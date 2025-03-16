@@ -1,0 +1,470 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-15 18:24+0400\n"
+"PO-Revision-Date: 2025-03-15 18:24+0400\n"
+"Last-Translator: YOUR NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Russian <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\news\filters.py:11
+msgid "Enter the title"
+msgstr "Введите заголовок"
+
+#: .\news\filters.py:16 .\news\forms.py:13 .\news\models.py:31
+#: .\news\models.py:59
+msgid "Author"
+msgstr "Автор"
+
+#: .\news\filters.py:22
+msgid "Publication date"
+msgstr "Дата публикации"
+
+#: .\news\forms.py:9 .\news\models.py:36 .\news\models.py:60
+msgid "Text"
+msgstr "Текст"
+
+#: .\news\forms.py:19 .\news\models.py:34 .\templates\category_list.html:4
+#: .\templates\category_list.html:8
+msgid "Categories"
+msgstr "Категории"
+
+#: .\news\forms.py:24 .\news\models.py:32
+msgid "Type"
+msgstr "Тип"
+
+#: .\news\forms.py:38
+msgid "The text should not be identical to the title."
+msgstr "Текст не должен совпадать с заголовком."
+
+#: .\news\models.py:8
+msgid "User"
+msgstr "Пользователь"
+
+#: .\news\models.py:9 .\news\models.py:37 .\news\models.py:62
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: .\news\models.py:26
+msgid "Category Name"
+msgstr "Название категории"
+
+#: .\news\models.py:33 .\news\models.py:61
+msgid "Publication Date"
+msgstr "Дата публикации"
+
+#: .\news\models.py:35
+msgid "Title"
+msgstr "Заголовок"
+
+#: .\news\models.py:54 .\news\models.py:58
+msgid "Post"
+msgstr "Пост"
+
+#: .\news\models.py:55
+msgid "Category"
+msgstr "Категория"
+
+#: .\news\tasks.py:21
+msgid "Weekly News Digest"
+msgstr "Еженедельный дайджест новостей"
+
+#: .\news\tasks.py:33
+#, python-format
+msgid "New post in category %(category_names)s: %(post_title)s"
+msgstr "Новый пост в категории %(category_names)s: %(post_title)s"
+
+#: .\news\tasks.py:47
+#, python-format
+msgid "Post updated: %(post_title)s"
+msgstr "Пост обновлён: %(post_title)s"
+
+#: .\news\views.py:47
+#, python-format
+msgid ""
+"Hello, %(username)s!\n"
+"Unfortunately, you have unsubscribed from news in the category "
+"%(category_name)s.\n"
+"\n"
+"I hope you will return and find a category that you like."
+msgstr ""
+"Здравствуйте, %(username)s!\n"
+"К сожалению, вы отписались от новостей в категории %(category_name)s.\n"
+"\n"
+"Надеемся, что вы вернётесь и найдёте категорию, которая вам понравится."
+
+#: .\news\views.py:51
+#, python-format
+msgid ""
+"Hello, %(username)s!\n"
+"You have successfully subscribed to news in the category %(category_name)s. "
+"We look forward to new news!\n"
+"\n"
+"We are glad to have you with us!"
+msgstr ""
+"Здравствуйте, %(username)s!\n"
+"Вы успешно подписались на новости в категории %(category_name)s. Ждём новых "
+"новостей!\n"
+"\n"
+"Мы рады, что вы с нами!"
+
+#: .\news\views.py:53
+#, python-format
+msgid "Category: %(category_name)s"
+msgstr "Категория: %(category_name)s"
+
+#: .\templates\account\email\email_confirmation_signup_message.html:7
+#, python-format
+msgid "Thank you for registering - %%s!"
+msgstr "Спасибо за регистрацию - %%s!"
+
+#: .\templates\account\email\email_confirmation_signup_message.html:10
+msgid "Please click"
+msgstr "Пожалуйста, нажмите"
+
+#: .\templates\account\email\email_confirmation_signup_message.html:10
+msgid "this link"
+msgstr "эту ссылку"
+
+#: .\templates\account\email\email_confirmation_signup_message.html:10
+msgid "to activate your account"
+msgstr "чтобы активировать ваш аккаунт"
+
+#: .\templates\account\email_confirm.html:5
+msgid "Confirmation email sent"
+msgstr "Письмо с подтверждением отправлено"
+
+#: .\templates\account\email_confirm.html:6
+msgid ""
+"We have sent you an email to confirm your email address. Please check your "
+"inbox and follow the instructions in the email."
+msgstr ""
+"Мы отправили вам письмо для подтверждения вашего адреса электронной почты. "
+"Пожалуйста, проверьте ваш почтовый ящик и следуйте инструкциям в письме."
+
+#: .\templates\account\email_confirm.html:7
+msgid ""
+"If you do not see the email in your main inbox, please check your spam "
+"folder."
+msgstr ""
+"Если вы не видите письмо в основном почтовом ящике, проверьте папку спам."
+
+#: .\templates\account\login.html:6 .\templates\account\login.html:17
+#: .\templates\account\signup.html:27
+msgid "Login"
+msgstr "Войти"
+
+#: .\templates\account\login.html:10 .\templates\account\password_reset.html:9
+#: .\templates\account\signup.html:14
+msgid "Email:"
+msgstr "Электронная почта:"
+
+#: .\templates\account\login.html:14 .\templates\account\signup.html:18
+msgid "Password:"
+msgstr "Пароль:"
+
+#: .\templates\account\login.html:19
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+#: .\templates\account\login.html:19
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
+#: .\templates\account\login.html:20
+msgid "Forgot your password?"
+msgstr "Забыли пароль?"
+
+#: .\templates\account\login.html:20
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: .\templates\account\login.html:21
+msgid "Login with Yandex"
+msgstr "Войти через Яндекс"
+
+#: .\templates\account\password_change.html:5
+msgid "Password reset link sent"
+msgstr "Ссылка для сброса пароля отправлена"
+
+#: .\templates\account\password_change.html:6
+msgid "Please check your email for instructions on how to reset your password."
+msgstr ""
+"Пожалуйста, проверьте вашу электронную почту для получения инструкций по "
+"сбросу пароля."
+
+#: .\templates\account\password_change.html:7
+#: .\templates\account\password_reset.html:14
+#: .\templates\account\password_reset_done.html:22
+msgid "Return to"
+msgstr "Вернуться к"
+
+#: .\templates\account\password_change.html:7
+#: .\templates\account\password_change_done.html:6
+#: .\templates\account\password_reset.html:14
+#: .\templates\account\password_reset_done.html:22
+msgid "login"
+msgstr "входу"
+
+#: .\templates\account\password_change_done.html:5
+msgid "Password changed successfully"
+msgstr "Пароль успешно изменён"
+
+#: .\templates\account\password_change_done.html:6
+msgid "Your password has been changed successfully. You can now"
+msgstr "Ваш пароль был успешно изменён. Теперь вы можете"
+
+#: .\templates\account\password_change_done.html:6
+msgid "with your new password."
+msgstr "войти с новым паролем."
+
+#: .\templates\account\password_reset.html:5
+msgid "Reset Password"
+msgstr "Сбросить пароль"
+
+#: .\templates\account\password_reset.html:12
+msgid "Send Password Reset Link"
+msgstr "Отправить ссылку для сброса пароля"
+
+#: .\templates\account\password_reset_done.html:5
+#: .\templates\account\password_reset_done.html:20
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#: .\templates\account\password_reset_done.html:9
+msgid "Old Password:"
+msgstr "Старый пароль:"
+
+#: .\templates\account\password_reset_done.html:13
+msgid "New Password:"
+msgstr "Новый пароль:"
+
+#: .\templates\account\password_reset_done.html:17
+msgid "Confirm New Password:"
+msgstr "Подтвердите новый пароль:"
+
+#: .\templates\account\signup.html:5 .\templates\account\signup.html:25
+msgid "Sign Up"
+msgstr "Зарегистрироваться"
+
+#: .\templates\account\signup.html:9
+msgid "Username:"
+msgstr "Имя пользователя:"
+
+#: .\templates\account\signup.html:22
+msgid "Confirm Password:"
+msgstr "Подтвердите пароль:"
+
+#: .\templates\account\signup.html:27
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#: .\templates\category_list.html:14 .\templates\subscribe.html:16
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: .\templates\emailmessage\message.html:6
+#: .\templates\emailmessage\message.html:10
+#, python-format
+msgid "New Post: %%s"
+msgstr "Новый пост: %%s"
+
+#: .\templates\emailmessage\message.html:11
+#: .\templates\emailmessage\messageUPGRADE.html:11
+#: .\templates\emailmessage\sending_all_news.html:15 .\templates\new.html:10
+#: .\templates\news.html:42
+msgid "Publication Date:"
+msgstr "Дата публикации:"
+
+#: .\templates\emailmessage\message.html:13
+#: .\templates\emailmessage\messageUPGRADE.html:13
+msgid "You can read the full article on our site:"
+msgstr "Вы можете прочитать полную статью на нашем сайте:"
+
+#: .\templates\emailmessage\message.html:13
+#: .\templates\emailmessage\messageUPGRADE.html:13
+msgid "Read Article"
+msgstr "Читать статью"
+
+#: .\templates\emailmessage\message.html:15
+#: .\templates\emailmessage\messageUPGRADE.html:15
+#: .\templates\emailmessage\sending_all_news.html:25
+msgid "Thank you for being with us!"
+msgstr "Спасибо, что вы с нами!"
+
+#: .\templates\emailmessage\messageUPGRADE.html:6
+#: .\templates\emailmessage\messageUPGRADE.html:10
+#, python-format
+msgid "Post Update: %%s"
+msgstr "Обновление поста: %%s"
+
+#: .\templates\emailmessage\sending_all_news.html:7
+msgid "Hello!"
+msgstr "Здравствуйте!"
+
+#: .\templates\emailmessage\sending_all_news.html:8
+msgid "Latest news for the week:"
+msgstr "Последние новости за неделю:"
+
+#: .\templates\emailmessage\sending_all_news.html:17
+msgid "Read more"
+msgstr "Читать далее"
+
+#: .\templates\emailmessage\sending_all_news.html:21
+msgid "Unfortunately, there are no new news."
+msgstr "К сожалению, новых новостей нет."
+
+#: .\templates\flatpages\default.html:11
+msgid "Django Project Nabieva"
+msgstr "Django Проект Набиевой"
+
+#: .\templates\flatpages\default.html:45
+msgid "PROJECT NAB"
+msgstr "ПРОЕКТ NAB"
+
+#: .\templates\flatpages\default.html:48
+msgid "Log In"
+msgstr "Войти"
+
+#: .\templates\flatpages\default.html:50
+msgid "Subscription"
+msgstr "Подписка"
+
+#: .\templates\flatpages\default.html:51
+msgid "Profile"
+msgstr "Профиль"
+
+#: .\templates\flatpages\default.html:54
+msgid "For Admin"
+msgstr "Для администратора"
+
+#: .\templates\limit.html:4
+msgid "Limit Exceeded"
+msgstr "Лимит превышен"
+
+#: .\templates\limit.html:6
+msgid "Oops!"
+msgstr "Упс!"
+
+#: .\templates\limit.html:7
+msgid ""
+"Sorry! But you cannot publish more than three news articles per day. Come "
+"back tomorrow with the freshest news!"
+msgstr ""
+"Извините! Вы не можете публиковать более трёх новостей в день. Возвращайтесь "
+"завтра с самыми свежими новостями!"
+
+#: .\templates\limit.html:8
+msgid "Return"
+msgstr "Вернуться"
+
+#: .\templates\new.html:6
+msgid "Back"
+msgstr "Назад"
+
+#: .\templates\new.html:7
+msgid "Edit Post"
+msgstr "Редактировать пост"
+
+#: .\templates\new.html:8 .\templates\post_delete.html:4
+msgid "Delete Post"
+msgstr "Удалить пост"
+
+#: .\templates\news.html:16 .\templates\post_edit.html:9
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\news.html:18
+msgid "All News"
+msgstr "Все новости"
+
+#: .\templates\news.html:21
+msgid "Find"
+msgstr "Найти"
+
+#: .\templates\news.html:29
+msgid "All Categories"
+msgstr "Все категории"
+
+#: .\templates\news.html:34
+msgid "Filter"
+msgstr "Фильтр"
+
+#: .\templates\news.html:47
+msgid "No news available!"
+msgstr "Новостей нет!"
+
+#: .\templates\post_delete.html:8
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+#: .\templates\post_delete.html:9
+msgid "Delete"
+msgstr "Удалить"
+
+#: .\templates\post_edit.html:4
+msgid "Create / Edit"
+msgstr "Создать / Редактировать"
+
+#: .\templates\profile.html:4
+msgid "Authorized User Page"
+msgstr "Страница авторизованного пользователя"
+
+#: .\templates\profile.html:5
+msgid "This may contain personal information for each user."
+msgstr "Здесь может содержаться личная информация для каждого пользователя."
+
+#: .\templates\profile.html:8
+msgid "Become an Author!"
+msgstr "Стать автором!"
+
+#: .\templates\profile.html:10
+msgid "Create Post!"
+msgstr "Создать пост!"
+
+#: .\templates\profile.html:12
+msgid "Do you want to log out?"
+msgstr "Вы хотите выйти?"
+
+#: .\templates\profile.html:15
+msgid "Log Out"
+msgstr "Выйти"
+
+#: .\templates\sign\logout.html:4
+msgid "You have logged out"
+msgstr "Вы вышли из системы"
+
+#: .\templates\subscribe.html:4
+msgid "Subscription Category"
+msgstr "Категория подписки"
+
+#: .\templates\subscribe.html:6
+msgid ""
+"You are subscribed to news in this category. Do you want to unsubscribe?"
+msgstr ""
+"Вы подписаны на новости в этой категории. Хотите отписаться?"
+
+#: .\templates\subscribe.html:8
+msgid ""
+"You are not subscribed to news in this category. Do you want to receive "
+"notifications for new news in this category?"
+msgstr ""
+"Вы не подписаны на новости в этой категории. Хотите получать уведомления о "
+"новых новостях в этой категории?"
+
+#: .\templates\subscribe.html:14
+msgid "Unsubscribe"
+msgstr "Отписаться"

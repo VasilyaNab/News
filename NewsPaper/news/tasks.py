@@ -6,6 +6,7 @@ from django.conf import settings
 from .models import Post
 from django.utils import timezone
 from datetime import timedelta
+from django.utils.translation import gettext as _
 
 @shared_task
 def send_all_newss():
@@ -17,7 +18,7 @@ def send_all_newss():
     html_content = render_to_string('emailmessage/sending_all_news.html', context)
     for user in users:
         if user.email:
-            subject = 'Еженедельная рассылка новостей'
+            subject = _('Weekly News Digest')
             msg = EmailMultiAlternatives(
                 subject=subject,
                 body='',
@@ -29,7 +30,7 @@ def send_all_newss():
 
 @shared_task
 def send_notif(subscriber_email, post_title, post_instance, category_names):
-    subject = f'Новая новость в категории {category_names}: {post_title}'
+    subject = _('New post in category %(category_names)s: %(post_title)s') % {'category_names': category_names, 'post_title': post_title}
     html_content = render_to_string('emailmessage/message.html', {'post': post_instance})
 
     msg = EmailMultiAlternatives(
@@ -43,7 +44,7 @@ def send_notif(subscriber_email, post_title, post_instance, category_names):
 
 @shared_task
 def send_UPGRADE_notif(subscriber_email, post_title, post_instance):
-    subject = f'Пост был обновлен: {post_title}'
+    subject = _('Post updated: %(post_title)s') % {'post_title': post_title}
     html_content = render_to_string('emailmessage/messageUPGRADE.html', {'post': post_instance})
 
     msg = EmailMultiAlternatives(

@@ -1,9 +1,9 @@
 {% extends 'flatpages/default.html' %}
-
+{% load i18n %}
 {% block content %}
-<h1>Лимит исчерпан</h1>
+<h1>{% trans "Limit Exceeded" %}</h1>
 <hr>
-<h1>Упс!</h1>
-    <p>Извините! Но вы не можете публиковать более трех новостей в сутки. Возращайтесь с самыми свежими новостями завтра!</p>
-    <a href="{% url 'news:news_list' %}">Вернуться</a>
+<h1>{% trans "Oops!" %}</h1>
+<p>{% trans "Sorry! But you cannot publish more than three news articles per day. Come back tomorrow with the freshest news!" %}</p>
+<a href="{% url 'news:news_list' %}">{% trans "Return" %}</a>
 {% endblock content %}

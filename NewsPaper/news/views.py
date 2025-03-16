@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from django.core.cache import cache
@@ -15,8 +16,10 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
 import logging
 
+logger = logging.getLogger(__name__)
 
 class CategoryListView(View):
     def get(self, request, *args, **kwargs):
@@ -41,13 +44,13 @@ class SubscribeView(View):
             if category.subscribers.filter(id=user.id).exists():
                 category.subscribers.remove(user)
                 is_subscribed = False
-                message = f"Здравствуйте, {user.username}!\nК сожалению, вы отписались от новостей в категории {category.name}.\n\nНадеюсь вы еще вернетесь и найдете категорию, которая вам по душе."
+                message = _("Hello, %(username)s!\nUnfortunately, you have unsubscribed from news in the category %(category_name)s.\n\nI hope you will return and find a category that you like.") % {'username': user.username, 'category_name': category.name}
             else:
                 category.subscribers.add(user)
                 is_subscribed = True
-                message = f"Здравствуйте, {user.username}!\nВы успешно подписались на новости в категории {category.name}. Ждем новых новостей!\n\nРады что вы с нами!"
+                message = _("Hello, %(username)s!\nYou have successfully subscribed to news in the category %(category_name)s. We look forward to new news!\n\nWe are glad to have you with us!") % {'username': user.username, 'category_name': category.name}
 
-            subject = f"Категория: {category.name}"
+            subject = _("Category: %(category_name)s") % {'category_name': category.name}
             email = user.email
             msg = EmailMultiAlternatives(
                 subject=subject,
@@ -133,12 +136,9 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('news:news_list')
 
 
-
-logger = logging.getLogger(__name__)
-
 def my_view(request):
-    logger.debug("Отладочное сообщение")
-    logger.info("Информационное сообщение")
-    logger.warning("Сообщение об предупреждении")
-    logger.error("Сообщение об ошибке")
-    logger.critical("Критическое сообщение")
+    logger.debug("Debug message")
+    logger.info("Info message")
+    logger.warning("Warning message")
+    logger.error("Error message")
+    logger.critical("Critical message")

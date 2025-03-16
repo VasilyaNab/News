@@ -1,9 +1,9 @@
 {% extends 'flatpages/default.html' %}
-#не получчилось. переделать!
+{% load i18n %}
 {% block content %}
 <div class="container">
-    <h1>Письмо с подтверждением отправлено</h1>
-    <p>Мы отправили вам письмо для подтверждения вашей электронной почты. Пожалуйста, проверьте свой почтовый ящик и следуйте инструкциям в письме.</p>
-    <p>Если вы не видите письмо в своем основном почтовом ящике, проверьте папку "Спам".</p>
+    <h1>{% trans "Confirmation email sent" %}</h1>
+    <p>{% trans "We have sent you an email to confirm your email address. Please check your inbox and follow the instructions in the email." %}</p>
+    <p>{% trans "If you do not see the email in your main inbox, please check your spam folder." %}</p>
 </div>
 {% endblock content %}

@@ -1,12 +1,12 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h1>Спасибо за регистрацию - {{ user.username }}!</h1>
+    <h1>{% trans "Thank you for registering - %s!" %} {{ user.username }}</h1>
 </head>
 <body>
-    <h3>Пожалуйста, перейдите <a href="{{ activate_url }}">по ссылке</a>, чтобы активировать свою учетную запись</h3>
+    <h3>{% trans "Please click" %} <a href="{{ activate_url }}">{% trans "this link" %}</a>, {% trans "to activate your account" %}</h3>
 </body>
 </html>
-

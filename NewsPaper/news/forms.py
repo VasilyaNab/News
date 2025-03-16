@@ -1,28 +1,29 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
 
 from .resources import POSITIONS
 from .models import Post, Category, Author
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=20, widget=forms.Textarea, label="Текст")
+    text = forms.CharField(min_length=20, widget=forms.Textarea, label=_("Text"))
     
     author = forms.ModelChoiceField(
         queryset=Author.objects.all(),
-        label="Автор"
+        label=_("Author")
     )
     
     categories = forms.ModelMultipleChoiceField(
-        # queryset=Category.objects.values_list('name', flat=True),
         queryset=Category.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        label="Категории"
+        label=_("Categories")
     )
 
     post_type = forms.ChoiceField( 
         choices=POSITIONS,
-        label="Тип"
+        label=_("Type")
     )
+    
     class Meta:
         model = Post
         fields = ['author', 'post_type', 'categories', 'title', 'text']
@@ -34,11 +35,7 @@ class PostForm(forms.ModelForm):
 
         if title == text:
             raise ValidationError(
-                "Текст не должен быть идентичен заголовку."
+                _("The text should not be identical to the title.")
             )
 
         return cleaned_data
-    
-    
-
-    

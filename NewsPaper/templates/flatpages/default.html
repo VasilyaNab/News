@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -7,21 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>Django Project Nabieva</title>
+    <title>{% trans "Django Project Nabieva" %}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-
-
-    
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        .mb-auto{
+        .mb-auto {
             margin-bottom: 50%!important;
-            }
+        }
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -32,12 +29,11 @@
 
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
-            font-size: 3.5rem;
+                font-size: 3.5rem;
             }
-      }
+        }
     </style>
 
-    
     <!-- Custom styles for this template -->
     <link href="{% static 'css/cover.css' %}" rel="stylesheet">
   </head>
@@ -46,32 +42,27 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header style='margin-bottom: 80px'>
     <div>
-      <a class="float-md-start mb-0 nav-link" style="color:rgba(255, 255, 255, .5); font-weight: 900; font-size: 25px" href="/">PROJECT NAB</a>
+      <a class="float-md-start mb-0 nav-link" style="color:rgba(255, 255, 255, .5); font-weight: 900; font-size: 25px" href="/">{% trans "PROJECT NAB" %}</a>
       <nav class="nav nav-masthead justify-content-center float-md-end">
-        {% comment %} <a class="nav-link active" aria-current="page" href="/about/">About Us</a> {% endcomment %}
         {% if not user.is_authenticated %}
-          {% comment %} <a class="nav-link" href="{% url "sign:login" %}">Войти</a>  {% endcomment %}
-          <a class="nav-link" href="/accounts/login/">Войти</a>
+          <a class="nav-link" href="/accounts/login/">{% trans "Log In" %}</a>
         {% else %}
-          <a class="nav-link" href="{% url "news:category_list" %}">Рассылка</a> 
-          <a class="nav-link" href="{% url "sign:profile" %}">ЛК</a> 
+          <a class="nav-link" href="{% url "news:category_list" %}">{% trans "Subscription" %}</a> 
+          <a class="nav-link" href="{% url "sign:profile" %}">{% trans "Profile" %}</a> 
         {% endif %}
         {% if user.is_admin or user.is_staff %}
-            <a class="nav-link" href="/admin/">ForAdmin</a>
+            <a class="nav-link" href="/admin/">{% trans "For Admin" %}</a>
         {% endif %}
       </nav>
     </div>
   </header>
 
   <main class="px-3">
-
     {% block content %}
     {% endblock content %}
   </main>
 
 </div>
-
-
 
   </body>
 </html>

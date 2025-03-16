@@ -33,6 +33,8 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -138,15 +142,22 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Русский'),
+]
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
 
-
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -209,110 +220,110 @@ CELERY_BEAT_SCHEDULE = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'cache_files'), # Указываем, куда будем сохранять кэшируемые файлы! Не забываем создать папку cache_files внутри папки с manage.py!
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
     }
 }
 
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 os.makedirs(LOG_DIR, exist_ok=True)
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    # Форматируется сообщение логирование перед их выводом или записью в файл. levelname - уровень сообщения,
-    # asctime - дата и время, module - модуль, message - само сообщение. pathname - путь к модулю
-    'style': '{',
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'detailed': {
-            'format': '{levelname} {asctime} {pathname} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    # filters - фильтры, при помощи которых в консоль сообщения отправляются только при DEBUG = True, а на почту и в файл general.log — только при DEBUG = False.
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-    'handlers': {
-        # console обработчик, который будет выводить сообщения в консоль. require_debug_true - выводить сообщения в консоль если DEBUG = True
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'detailed',
-            'filters': ['require_debug_true'],
-        },
-        # file_handler - обработчик, который будет записывать сообщения в файл. require_debug_false - выводить сообщения в файл если DEBUG = False
-        'file_general': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'general.log'),
-            'formatter': 'verbose',
-            'filters': ['require_debug_false'],
-        },
-        # file_errors - обработчик, который будет записывать сообщения об ошибках в файл 
-        'file_errors': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'errors.log'),
-            'formatter': 'detailed',
-        },
-        # file_security - обработчик, который будет записывать сообщения об ошибках в файл
-        'file_security': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_DIR, 'security.log'),
-            'formatter': 'verbose',
-        },
-        # mail_admins - обработчик, который будет отправлять сообщения на почту уровня ERROR и выше
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'detailed',
-            'filters': ['require_debug_false'],
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file_general', 'file_errors', 'file_security', 'console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['mail_admins', 'file_errors'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'django.server': {
-            'handlers': ['mail_admins', 'file_errors'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'django.template': {
-            'handlers': ['file_errors'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'django.db.backends': {
-            'handlers': ['file_errors'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-        'django.security': {
-            'handlers': ['file_security'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     # Форматируется сообщение логирование перед их выводом или записью в файл. levelname - уровень сообщения,
+#     # asctime - дата и время, module - модуль, message - само сообщение. pathname - путь к модулю
+#     'style': '{',
+#     'formatters': {
+#         'verbose': {
+#             'format': '{levelname} {asctime} {module} {message}',
+#             'style': '{',
+#         },
+#         'detailed': {
+#             'format': '{levelname} {asctime} {pathname} {message}',
+#             'style': '{',
+#         },
+#         'simple': {
+#             'format': '{levelname} {message}',
+#             'style': '{',
+#         },
+#     },
+#     # filters - фильтры, при помощи которых в консоль сообщения отправляются только при DEBUG = True, а на почту и в файл general.log — только при DEBUG = False.
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#     },
+#     'handlers': {
+#         # console обработчик, который будет выводить сообщения в консоль. require_debug_true - выводить сообщения в консоль если DEBUG = True
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'detailed',
+#             'filters': ['require_debug_true'],
+#         },
+#         # file_handler - обработчик, который будет записывать сообщения в файл. require_debug_false - выводить сообщения в файл если DEBUG = False
+#         'file_general': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(LOG_DIR, 'general.log'),
+#             'formatter': 'verbose',
+#             'filters': ['require_debug_false'],
+#         },
+#         # file_errors - обработчик, который будет записывать сообщения об ошибках в файл 
+#         'file_errors': {
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(LOG_DIR, 'errors.log'),
+#             'formatter': 'detailed',
+#         },
+#         # file_security - обработчик, который будет записывать сообщения об ошибках в файл
+#         'file_security': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(LOG_DIR, 'security.log'),
+#             'formatter': 'verbose',
+#         },
+#         # mail_admins - обработчик, который будет отправлять сообщения на почту уровня ERROR и выше
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'class': 'django.utils.log.AdminEmailHandler',
+#             'formatter': 'detailed',
+#             'filters': ['require_debug_false'],
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file_general', 'file_errors', 'file_security', 'console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['mail_admins', 'file_errors'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.server': {
+#             'handlers': ['mail_admins', 'file_errors'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.template': {
+#             'handlers': ['file_errors'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.db.backends': {
+#             'handlers': ['file_errors'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.security': {
+#             'handlers': ['file_security'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#     }
+# }
