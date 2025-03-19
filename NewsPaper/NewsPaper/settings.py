@@ -67,6 +67,7 @@ MIDDLEWARE = [
 
     "allauth.account.middleware.AccountMiddleware",
 
+    'news.middlewares.TimezoneMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 

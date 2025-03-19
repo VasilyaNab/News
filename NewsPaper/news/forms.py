@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-
+from pytz import common_timezones
 from .resources import POSITIONS
 from .models import Post, Category, Author
 
@@ -39,3 +39,6 @@ class PostForm(forms.ModelForm):
             )
 
         return cleaned_data
+
+class TimezoneForm(forms.Form):
+    timezone = forms.ChoiceField(choices=[(tz, tz) for tz in common_timezones], label=_("Select Timezone"))

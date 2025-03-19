@@ -18,22 +18,30 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 import logging
+import pytz
 
 logger = logging.getLogger(__name__)
 
 class CategoryListView(View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
-        return render(request, 'category_list.html', {'categories': categories})
+        current_time = getattr(request, 'current_time', None)
+
+        return render(request, 'category_list.html', {
+            'categories': categories,
+            'current_time': current_time,
+        })
 
 
 class SubscribeView(View):
     def get(self, request, category_id):
         category = Category.objects.filter(id=category_id).first()
         is_subscribed = request.user.is_authenticated and category.subscribers.filter(id=request.user.id).exists()
+        current_time = getattr(request, 'current_time', None)
         return render(request, 'subscribe.html', {
             'category': category,
             'is_subscribed': is_subscribed,
+            'current_time': current_time,
         })
 
     def post(self, request, category_id):
@@ -61,6 +69,7 @@ class SubscribeView(View):
             msg.send()
 
         return redirect('news:subscribe', category_id=category.id)
+    
 @method_decorator(cache_page(60 * 5), name='dispatch')
 class NewsList(ListView):
     model = Post
@@ -92,6 +101,8 @@ class NewsList(ListView):
         filterset.form.fields['created_at'].label = translation.gettext('Publication date')
         context['filterset'] = filterset
         context['categories'] = Category.objects.all()
+        context['timezones'] = pytz.common_timezones
+
         return context
 
 @method_decorator(cache_page(60 * 5), name='dispatch')

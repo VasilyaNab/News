@@ -1,6 +1,7 @@
 {% extends 'flatpages/default.html' %}
 {% load custom_filter %}
 {% load i18n %}
+{% load tz %}
 {% block content %}
 <form method="post" action="{% url 'set_language' %}">
     {% csrf_token %}
@@ -15,6 +16,20 @@
     </select>
     <button type="submit">{% trans "Save" %}</button>
 </form>
+
+<form method="post" action="{% url 'news:news_list' %}">
+    {% csrf_token %}
+    <select name="timezone">
+        {% for tz in timezones %}
+            <option value="{{ tz }}" {% if tz == request.session.django_timezone %}selected{% endif %}>{{ tz }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">{% trans "Set Timezone" %}</button>
+</form>
+ 
+
+<p>{% trans "Current time:" %} {{ current_time|date:"d.m.Y H:i" }}</p>
+    
     <h1>{% trans "All News" %}</h1> 
     <form action="" method="get"> 
         {{ filterset.form.as_p }}
