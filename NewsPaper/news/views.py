@@ -78,6 +78,12 @@ class NewsList(ListView):
     context_object_name = 'news'
     paginate_by = 10
 
+    def post(self, request, *args, **kwargs):
+        tz = request.POST.get('timezone')
+        if tz:
+            request.session['django_timezone'] = tz
+            timezone.activate(pytz.timezone(tz))
+        return redirect('news:news_list')
     def get(self, request, *args, **kwargs):
         language = request.GET.get('language')
         if language:
